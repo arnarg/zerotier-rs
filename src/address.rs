@@ -4,6 +4,7 @@ use arrayref::{array_mut_ref, array_ref};
 use failure::Error;
 use serde::*;
 use std::{convert::TryFrom, mem};
+use std::fmt;
 
 use salsa20::Salsa20;
 use salsa20::cipher::{KeyIvInit, StreamCipher};
@@ -35,6 +36,12 @@ impl Serialize for Address {
         S: Serializer,
     {
         serializer.serialize_str(&hex::encode(self.0))
+    }
+}
+
+impl fmt::Display for Address {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", hex::encode(self.0))
     }
 }
 
